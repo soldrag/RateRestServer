@@ -13,7 +13,7 @@ def get_rate(valute, request_value, url=get_url) -> json:
 def data_handler(raw_data: tuple, request_value) -> json:
     currency, resp = raw_data
     data = {
-        'valute': currency,
+        'currency': currency,
         'rate': resp['Value'],
         'request_value': request_value,
         'result_value': round(request_value * resp['Value'], 2)
