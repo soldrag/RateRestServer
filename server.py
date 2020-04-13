@@ -1,12 +1,20 @@
 from http import server
+from urllib.parse import urlparse, parse_qs
+import handler
 
 
 class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
 
-    def get_request(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b'some resp')
+    def do_GET(self):
+        parse = parse_qs(urlparse(self.path).query)
+        if self.path.startswith('/?'):
+            args = parse
+            valute = args.get('valute')[0]
+            value = float(args.get('value')[0])
+            resp = handler.get_rate(valute, value)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(resp.encode())
 
 
 def run(server_class=server.HTTPServer, handler_class=SimpleHTTPRequestHandler):

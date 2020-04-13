@@ -5,10 +5,21 @@ import json
 get_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
-def get_rate(url: str) -> float:
-    resp = dict(json.loads(request.urlopen(url).read()))
-    return float(resp['Valute']['USD']['Value'])
+def get_rate(valute, request_value, url=get_url) -> json:
+    resp = dict(json.loads(request.urlopen(url).read())['Valute'])
+    return data_handler((valute, resp[valute]), request_value)
+
+
+def data_handler(raw_data: tuple, request_value):
+    valute, resp = raw_data
+    data = {
+        'valute': valute,
+        'rate': resp['Value'],
+        'request_value': request_value,
+        'result_value': round(request_value * resp['Value'], 2)
+    }
+    return json.dumps(data)
 
 
 if __name__ == "__main__":
-    print(get_rate(get_url))
+    print(get_rate('USD', 100))
