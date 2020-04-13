@@ -9,10 +9,11 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
         parse = parse_qs(urlparse(self.path).query)
         if self.path.startswith('/?'):
             args = parse
-            valute = args.get('valute')[0]
+            currency = args.get('currency')[0]
             value = float(args.get('value')[0])
-            resp = handler.get_rate(valute, value)
+            resp = handler.get_rate(currency, value)
             self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
             self.end_headers()
             self.wfile.write(resp.encode())
 
