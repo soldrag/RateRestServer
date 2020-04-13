@@ -3,13 +3,17 @@ import argparse
 
 
 def arg_parser():
+    default_address = '127.0.0.1'
+    default_port = 8000
     parser = argparse.ArgumentParser()
-    parser.add_argument('address', type=str, help='Address for port listening')
-    parser.add_argument('port', type=int, help='Port for server')
+    parser.add_argument('-a', action='store', dest='address', type=str, default='127.0.0.1', help='Server address')
+    parser.add_argument('-p', action='store', dest='port', type=int, default=8000, help='Server port')
     args = parser.parse_args()
-    return args.address, args.port
+    address = args.address if args.address else default_address
+    port = args.port if args.port else default_port
+    return address, port
 
 
 if __name__ == '__main__':
-    params = arg_parser()
-    server.run(*params)
+    srv_address, srv_port = arg_parser()
+    server.run(srv_address, srv_port)
