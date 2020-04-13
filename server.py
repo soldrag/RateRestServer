@@ -10,7 +10,7 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
         if self.path.startswith('/rest/convert?'):
             try:
                 args = parse
-                currency = args['currency'][0]
+                currency = 'USD' if args.get('currency') is None else args.get('currency')[0]
                 value = float(args['value'][0])
                 resp = handler.get_rate(currency, value)
                 self.send_response(200)
@@ -29,7 +29,7 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
             self.wfile.write(b'Nothing')
 
 
-def run(server_class=server.HTTPServer, handler_class=SimpleHTTPRequestHandler):
-    server_address = ('127.0.0.1', 8000)
+def run(address='127.0.0.1', port=8000, server_class=server.HTTPServer, handler_class=SimpleHTTPRequestHandler):
+    server_address = (address, port)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
