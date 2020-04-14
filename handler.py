@@ -13,9 +13,10 @@ def args_parser(request_path: str) -> Tuple:
     :return: tuple from parsed currency and requested value
     """
     default_currency = 'USD'
+    request_path = request_path.encode('UTF-8')
     args = parse_qs(urlparse(request_path).query)
-    currency = default_currency if args.get('currency') is None else args.get('currency')[0]
-    request_value = float(args['value'][0])
+    currency = default_currency if args.get(b'currency') is None else args.get(b'currency')[0]
+    request_value = float(args[b'value'][0])
     return currency, request_value
 
 

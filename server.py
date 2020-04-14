@@ -1,5 +1,7 @@
 from http import server
 import handler
+from urllib.error import URLError
+from json import JSONDecodeError
 
 
 class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
@@ -12,13 +14,20 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
                 self.wfile.write(resp.encode())
+            except JSONDecodeError:
+                self.send_response(400)
+                self.send_error(400, f'Cant parse json object from url: {handler.source_url}')
             except (KeyError, ValueError) as err:
                 self.send_response(400)
-                self.send_error(400, f"Wrong argument {err}")
+                self.send_error(400, f'Wrong argument: {err}')
+            except URLError as err:
+                self.send_response(400)
+                self.send_error(400, f'Cant access to data source: {err}')
+
 
         else:
             self.send_response(400)
-            self.send_error(400, 'For converting use /rest/convert?value=')
+            self.send_error(400, 'For converting use /rest/convert?value={value}')
 
 
 def run(address, port, server_class=server.HTTPServer, handler_class=SimpleHTTPRequestHandler) -> None:
