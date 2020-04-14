@@ -3,37 +3,47 @@ from urllib.parse import urlparse, parse_qs
 import json
 
 
-get_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
+source_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
-def url_parser(request_path: str):
+def args_parser(request_path: str) -> json:
     default_currency = 'USD'
     args = parse_qs(urlparse(request_path).query)
     print(args.get('value'))
     currency = default_currency if args.get('currency') is None else args.get('currency')[0]
-    value = float(args['value'][0])
-    return get_rate(currency, value)
+    request_value = float(args['value'][0])
+    return currency, request_value
 
 
-def get_rate(currency, request_value, url=get_url) -> json:
+def get_currency_rate(currency, url) -> float:
     resp = json.loads(request.urlopen(url).read())['Valute']
-    return data_handler(currency, resp[currency]['Value'], request_value)
+    return resp[currency]['Value']
 
 
-def data_handler(currency: str, currency_value: float, request_value: float) -> json:
+def json_compiler(currency: str, currency_rate: float, request_value: float, converted_value: float) -> json:
     """
     :param currency: current currency
-    :param currency_value: rate for current currency
+    :param currency_rate: rate for current currency
     :param request_value: value for converting
-    :return: json with answer
+    :param converted_value: converted value
+    :return: json with converted value and other
     """
+    if currency_rate < 0 or request_value < 0 or converted_value < 0:
+        raise ValueError('value must be positive')
     data = {
         'currency': currency,
-        'rate': currency_value,
+        'rate': currency_rate,
         'request_value': request_value,
-        'result_value': round(request_value * currency_value, 2)
+        'converted_value': converted_value
     }
     return json.dumps(data)
+
+
+def data_handler(request_path):
+    currency, request_value = args_parser(request_path)
+    currency_rate = get_currency_rate(currency, source_url)
+    converted_value = round(request_value*currency_rate, 2)
+    return json_compiler(currency, currency_rate, request_value, converted_value)
 
 
 if __name__ == "__main__":

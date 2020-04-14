@@ -2,7 +2,7 @@ import server
 import argparse
 
 
-def arg_parser():
+def arg_parser() -> tuple:
     default_address = '127.0.0.1'
     default_port = 8000
     parser = argparse.ArgumentParser()
