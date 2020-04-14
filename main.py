@@ -3,6 +3,10 @@ import argparse
 
 
 def arg_parser() -> tuple:
+    """
+    The function parses cmd arguments. If there are no arguments, it uses the default values.
+    :return: tuple from address and port
+    """
     default_address = '127.0.0.1'
     default_port = 8000
     parser = argparse.ArgumentParser()
