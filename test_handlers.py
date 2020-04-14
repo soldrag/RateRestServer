@@ -40,6 +40,8 @@ class TestArgParser(unittest.TestCase):
         self.valid_path = '/rest/convert?value=100'
         self.invalid_value = '/rest/convert?value=10t'
         self.no_value = '/rest/convert?valu=100'
+        self.not_ascii_value = '/rest/convert?value=10ф'
+        self.not_ascii_currency = '/rest/convert?value=100&currency=ГSD'
 
     def test_valid_path1(self):
         self.assertEqual(self.arg_parser(self.full_valid_path), ('EUR', 100))
@@ -54,6 +56,14 @@ class TestArgParser(unittest.TestCase):
     def test_no_value(self):
         with self.assertRaises(KeyError):
             self.arg_parser(self.no_value)
+
+    def test_not_ascii_value(self):
+        with self.assertRaises(ValueError):
+            self.arg_parser(self.not_ascii_value)
+
+    def test_not_ascii_currency(self):
+        with self.assertRaises(ValueError):
+            self.arg_parser(self.not_ascii_currency)
 
 
 if __name__ == '__main__':

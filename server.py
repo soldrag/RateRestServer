@@ -19,12 +19,10 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_error(400, f'Cant parse json object from url: {handler.source_url}')
             except (KeyError, ValueError) as err:
                 self.send_response(400)
-                self.send_error(400, f'Wrong argument: {err}')
+                self.send_error(400, f'{err}')
             except URLError as err:
                 self.send_response(400)
                 self.send_error(400, f'Cant access to data source: {err}')
-
-
         else:
             self.send_response(400)
             self.send_error(400, 'For converting use /rest/convert?value={value}')

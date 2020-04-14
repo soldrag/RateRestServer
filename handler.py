@@ -3,21 +3,23 @@ from urllib.parse import urlparse, parse_qs
 import json
 from typing import Tuple
 
+
 source_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
 def args_parser(request_path: str) -> Tuple:
     """
-    Parse arguments from url path
+    Parse arguments from url path, default currency - USD
     :param request_path: url_path
     :return: tuple from parsed currency and requested value
     """
     default_currency = 'USD'
-    request_path = request_path.encode('UTF-8')
     args = parse_qs(urlparse(request_path).query)
-    currency = default_currency if args.get(b'currency') is None else args.get(b'currency')[0]
-    request_value = float(args[b'value'][0])
-    return currency, request_value
+    currency = default_currency if args.get('currency') is None else args.get('currency')[0]
+    request_value = args['value'][0]
+    if not currency.isascii() or not request_value.isascii():
+        raise ValueError('Not ASCII symbols in arguments')
+    return currency, float(request_value)
 
 
 def get_currency_rate(currency: str, url: str) -> float:
@@ -41,7 +43,7 @@ def json_compiler(currency: str, currency_rate: float, request_value: float, con
     :return: json with converted value and other
     """
     if currency_rate < 0 or request_value < 0 or converted_value < 0:
-        raise ValueError('value must be positive')
+        raise ValueError('Values must be positive')
     data = {
         'currency': currency,
         'rate': currency_rate,
@@ -59,9 +61,9 @@ def data_handler(request_path) -> str:
     """
     currency, request_value = args_parser(request_path)
     currency_rate = get_currency_rate(currency, source_url)
-    converted_value = round(request_value*currency_rate, 2)
+    converted_value = round(request_value * currency_rate, 2)
     return json_compiler(currency, currency_rate, request_value, converted_value)
 
 
 if __name__ == "__main__":
-    pass
+    args_parser('/rest/convert?value=10ф')
