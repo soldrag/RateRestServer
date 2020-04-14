@@ -16,7 +16,7 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
                 self.wfile.write(resp.encode())
             except JSONDecodeError:
                 self.send_response(400)
-                self.send_error(400, f'Cant parse json object from url: {handler.source_url}')
+                self.send_error(400, f'Cant parse json object from source: {handler.source_url}')
             except (KeyError, ValueError) as err:
                 self.send_response(400)
                 self.send_error(400, f'{err}')
