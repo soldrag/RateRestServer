@@ -1,20 +1,13 @@
 from http import server
-from urllib.parse import urlparse, parse_qs
 import handler
 
 
 class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
 
     def do_GET(self):
-        default_currency = 'USD'
-        parse = parse_qs(urlparse(self.path).query)
         if self.path.startswith('/rest/convert?'):
             try:
-                args = parse
-                print(args.get('value'))
-                currency = default_currency if args.get('currency') is None else args.get('currency')[0]
-                value = float(args['value'][0])
-                resp = handler.get_rate(currency, value)
+                resp = handler.url_parser(self.path)
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()

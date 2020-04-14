@@ -1,8 +1,18 @@
 from urllib import request
+from urllib.parse import urlparse, parse_qs
 import json
 
 
 get_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
+
+
+def url_parser(request_path: str):
+    default_currency = 'USD'
+    args = parse_qs(urlparse(request_path).query)
+    print(args.get('value'))
+    currency = default_currency if args.get('currency') is None else args.get('currency')[0]
+    value = float(args['value'][0])
+    return get_rate(currency, value)
 
 
 def get_rate(currency, request_value, url=get_url) -> json:
@@ -27,4 +37,4 @@ def data_handler(currency: str, currency_value: float, request_value: float) -> 
 
 
 if __name__ == "__main__":
-    print(get_rate('USD', 100))
+    pass
