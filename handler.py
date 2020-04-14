@@ -29,11 +29,11 @@ def get_currency_rate(currency: str, url: str) -> float:
     :param url: source url
     :return: currency rate
     """
-    resp = json.loads(request.urlopen(url).read())
-    resp = resp['Valute'][currency]['Value']
-    if not isinstance(resp, float):
-        float(resp)
-    return resp
+    currency_rate = json.loads(request.urlopen(url).read())
+    currency_rate = currency_rate['Valute'][currency]['Value']
+    if not isinstance(currency_rate, float):
+        float(currency_rate)
+    return currency_rate
 
 
 def json_compiler(currency: str, currency_rate: float, request_value: float, converted_value: float) -> str:
