@@ -1,6 +1,6 @@
 # RateRestServer
 ## REST web server for converting currency
-###Test task
+
 It is simply rest web server converting currency -> rub.
 
 For start server run main.py
