@@ -8,10 +8,10 @@ For start server run main.py
 main.py have 3 optional named arguments
 * -a: server address (default 127.0.0.1)
 * -p: server port (default 8000)
-* -l: logging level (default info level)
-  * 1: debug level
-  * 2: info level
-  * 3: error level
+* -l: logging level 0-2 (default info level)
+  * 0: debug level
+  * 1: info level
+  * 2: error level
 
 For converting use GET request with pattern: server_address:port/rest/convert?value=value&currency=currency
   * value: float value for converting (70.5)
