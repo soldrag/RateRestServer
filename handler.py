@@ -7,7 +7,7 @@ from typing import Tuple
 source_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
-def args_parser(request_path: str) -> Tuple:
+def request_args_parser(request_path: str) -> Tuple:
     """
     Parse arguments from url path, default currency - USD
     :param request_path: url_path
@@ -62,7 +62,7 @@ def data_handler(request_path: str) -> str:
     :param request_path: url path from request
     :return: json object
     """
-    currency, request_value = args_parser(request_path)
+    currency, request_value = request_args_parser(request_path)
     currency_rate = get_currency_rate(currency, source_url)
     converted_value = round(request_value * currency_rate, 2)
     return json_compiler(currency, currency_rate, request_value, converted_value)

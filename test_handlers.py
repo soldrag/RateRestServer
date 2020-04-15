@@ -1,5 +1,5 @@
 import unittest
-from handler import json_compiler, args_parser
+from handler import json_compiler, request_args_parser
 import json
 
 
@@ -35,7 +35,7 @@ class TestJsonCompiler(unittest.TestCase):
 class TestArgParser(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.arg_parser = args_parser
+        self.request_arg_parser = request_args_parser
         self.full_valid_path = '/rest/convert?value=100&currency=EUR'
         self.valid_path = '/rest/convert?value=100'
         self.invalid_value = '/rest/convert?value=10t'
@@ -44,26 +44,26 @@ class TestArgParser(unittest.TestCase):
         self.not_ascii_currency = '/rest/convert?value=100&currency=ГSD'
 
     def test_valid_path1(self):
-        self.assertEqual(self.arg_parser(self.full_valid_path), ('EUR', 100))
+        self.assertEqual(self.request_arg_parser(self.full_valid_path), ('EUR', 100))
 
     def test_valid_path2(self):
-        self.assertEqual(self.arg_parser(self.valid_path), ('USD', 100))
+        self.assertEqual(self.request_arg_parser(self.valid_path), ('USD', 100))
 
     def test_invalid_value(self):
         with self.assertRaises(ValueError):
-            self.arg_parser(self.invalid_value)
+            self.request_arg_parser(self.invalid_value)
 
     def test_no_value(self):
         with self.assertRaises(KeyError):
-            self.arg_parser(self.no_value)
+            self.request_arg_parser(self.no_value)
 
     def test_not_ascii_value(self):
         with self.assertRaises(ValueError):
-            self.arg_parser(self.not_ascii_value)
+            self.request_arg_parser(self.not_ascii_value)
 
     def test_not_ascii_currency(self):
         with self.assertRaises(ValueError):
-            self.arg_parser(self.not_ascii_currency)
+            self.request_arg_parser(self.not_ascii_currency)
 
 
 if __name__ == '__main__':
