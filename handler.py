@@ -4,7 +4,7 @@ import json
 from typing import Tuple
 
 
-source_url = 'https://www.cbr-xml-daily.ru/daily_json.js'
+SOURCE_URL = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
 def request_args_parser(request_path: str) -> Tuple:
@@ -63,6 +63,6 @@ def data_handler(request_path: str) -> str:
     :return: json object
     """
     currency, request_value = request_args_parser(request_path)
-    currency_rate = get_currency_rate(currency, source_url)
+    currency_rate = get_currency_rate(currency, SOURCE_URL)
     converted_value = round(request_value * currency_rate, 2)
     return json_compiler(currency, currency_rate, request_value, converted_value)
