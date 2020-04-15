@@ -27,9 +27,9 @@ class SimpleHTTPRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_response(400)
                 self.send_error(400, f'Cant parse json object from source: {handler.SOURCE_URL}')
                 server_logger.error(f'Response: 400, Cant parse json object from source: {handler.SOURCE_URL}')
-            except (KeyError, ValueError) as err:
+            except (KeyError, ValueError, TypeError) as err:
                 self.send_response(400)
-                self.send_error(400, f'{err}')
+                self.send_error(400, f'Wrong argument: {err}')
                 server_logger.error(f'Response: 400, {err}')
             except URLError as err:
                 self.send_response(400)
