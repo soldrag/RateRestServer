@@ -69,4 +69,4 @@ def data_handler(request_path: str) -> str:
 
 
 if __name__ == "__main__":
-    args_parser('/rest/convert?value=10ф')
+    pass
