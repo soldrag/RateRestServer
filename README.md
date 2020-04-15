@@ -3,6 +3,8 @@
 
 It is simply rest web server converting currency -> rub.
 
+Required Python 3.6+
+
 For start server run main.py, or you can build docker container. 
 
 main.py have 3 optional named arguments
