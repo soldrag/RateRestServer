@@ -6,7 +6,7 @@ It is simply rest web server converting currency -> rub.
 For start server run main.py, or you can build docker container. 
 
 main.py have 3 optional named arguments
-* -a: server address (default 127.0.0.1)
+* -a: server address (default 0.0.0.0)
 * -p: server port (default 8000)
 * -l: logging level 0-2 (default info level)
   * 0: debug level
