@@ -32,7 +32,7 @@ class TestJsonCompiler(unittest.TestCase):
             self.json_compiler('USD', 68.50, 100, -6850.0)
 
 
-class TestArgParser(unittest.TestCase):
+class TestRequestArgParser(unittest.TestCase):
 
     def setUp(self) -> None:
         self.request_arg_parser = request_args_parser
