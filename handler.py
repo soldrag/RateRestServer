@@ -66,7 +66,3 @@ def data_handler(request_path: str) -> str:
     currency_rate = get_currency_rate(currency, source_url)
     converted_value = round(request_value * currency_rate, 2)
     return json_compiler(currency, currency_rate, request_value, converted_value)
-
-
-if __name__ == "__main__":
-    pass
