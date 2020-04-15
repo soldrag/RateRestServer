@@ -56,7 +56,7 @@ def json_compiler(currency: str, currency_rate: float, request_value: float, con
     return json.dumps(data)
 
 
-def data_handler(request_path) -> str:
+def data_handler(request_path: str) -> str:
     """
     Just call all handlers and return json response
     :param request_path: url path from request

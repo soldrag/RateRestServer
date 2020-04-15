@@ -21,17 +21,15 @@ def arg_parser() -> tuple:
     The function parses cmd arguments. If there are no arguments, it uses the default values.
     :return: tuple from address and port
     """
-    default_address = '127.0.0.1'
-    default_port = 8000
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', action='store', dest='address', type=str, default='127.0.0.1', help='Server address')
+    parser.add_argument('-a', action='store', dest='address', type=str, default='0.0.0.0', help='Server address')
     parser.add_argument('-p', action='store', dest='port', type=int, default=8000, help='Server port')
     parser.add_argument('-l', action='store', dest='log_number', type=int, default=1, help='Log level 0-2')
     args = parser.parse_args()
-    address = args.address if args.address else default_address
-    port = args.port if args.port else default_port
-    log_number = args.log_number
-    return address, port, log_number
+    arg_address = args.address
+    arg_port = args.port
+    arg_log_number = args.log_number
+    return arg_address, arg_port, arg_log_number
 
 
 def get_log_level(number):

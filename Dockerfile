@@ -3,5 +3,5 @@ MAINTAINER Artem Smirnov 'soldrag@gmail.com'
 RUN apt-get update -y
 COPY . /app
 WORKDIR /app
-ENTRYPOINT ['python']
-CMD ['main.py']
+ENTRYPOINT ["python", "./main.py"]
+EXPOSE 8000
