@@ -24,7 +24,7 @@ def arg_parser() -> tuple:
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', action='store', dest='address', type=str, default='0.0.0.0', help='Server address')
     parser.add_argument('-p', action='store', dest='port', type=int, default=8000, help='Server port')
-    parser.add_argument('-l', action='store', dest='log_number', type=int, default=1, help='Log level 0-2')
+    parser.add_argument('-l', action='store', dest='log_number', type=int, default=0, help='Log level 0-2')
     args = parser.parse_args()
     arg_address = args.address
     arg_port = args.port

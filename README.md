@@ -8,7 +8,7 @@ For start server run main.py, or you can build docker container.
 main.py have 3 optional named arguments
 * -a: server address (default 0.0.0.0)
 * -p: server port (default 8000)
-* -l: logging level 0-2 (default info level)
+* -l: logging level 0-2 (default debug level)
   * 0: debug level
   * 1: info level
   * 2: error level
