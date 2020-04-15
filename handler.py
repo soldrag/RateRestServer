@@ -7,7 +7,7 @@ from typing import Tuple
 SOURCE_URL = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
 
-def request_args_parser(request_path: str) -> Tuple:
+def request_args_parser(request_path: str) -> Tuple[str, float]:
     """
     Parse arguments from url path, default currency - USD
     :param request_path: url_path
@@ -16,7 +16,7 @@ def request_args_parser(request_path: str) -> Tuple:
     default_currency = 'USD'
     args = parse_qs(urlparse(request_path).query)
     currency = default_currency if args.get('currency') is None else args.get('currency')[0]
-    request_value = args['value'][0]
+    request_value = args.get('value')[0]
     if not currency.isascii() or not request_value.isascii():
         raise ValueError('Not ASCII symbols in arguments')
     return currency, float(request_value)
