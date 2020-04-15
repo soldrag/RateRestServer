@@ -1,16 +1,30 @@
 # RateRestServer
-Test task
-It is simply rest webserver converting currency -> rub.
+## REST web server for converting currency
+###Test task
+It is simply rest web server converting currency -> rub.
+
 For start server run main.py
+
 main.py have 3 optional named arguments
--a: server address (default 127.0.0.1)
--p: server port (default 8000)
--l: logging level (default info level)
-  1: debug level
-  2: info level
-  3: error level
+* -a: server address (default 127.0.0.1)
+* -p: server port (default 8000)
+* -l: logging level (default info level)
+  * 1: debug level
+  * 2: info level
+  * 3: error level
 
 For converting use GET request with pattern: server_address:port/rest/convert?value=value&currency=currency
-  value: float value for converting (70.5)
-  currency: optional argument (default USD), you can select currency for converting (USD, EUR, AUD..)
+  * value: float value for converting (70.5)
+  * currency: optional argument (default USD), you can select currency for converting (USD, EUR, AUD..)
   
+ request example 'http://127.0.0.1:8000/rest/convert?value=100&currency=EUR'
+ 
+ Server return json object:
+``` 
+ {
+    'currency': currency,
+    'rate': currency_rate,
+    'request_value': request_value,
+    'converted_value': converted_value
+ } 
+``` 
