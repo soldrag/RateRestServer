@@ -3,7 +3,7 @@
 
 It is simply rest web server converting currency -> rub.
 
-For start server run main.py
+For start server run main.py, or you can build docker container. 
 
 main.py have 3 optional named arguments
 * -a: server address (default 127.0.0.1)
